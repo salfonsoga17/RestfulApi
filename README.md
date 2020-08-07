@@ -1,4 +1,4 @@
-# RestfulApi
+# RestfulApi Node js y MySQL
 
 Para realizar la ejecución de la api in localhost:
 
