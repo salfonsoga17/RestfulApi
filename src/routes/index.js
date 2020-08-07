@@ -1,11 +1,10 @@
-const express = require("express");
-const app = express();
-
+const {Router} = require('express');
+const router = Router();
 // Load the MySQL pool connection
-const pool = require('../RestfulApi/data/config.js');
+const pool = require('../data/config.js');
 
 // Display all persons
-app.get('/person', (request, response) => {
+router.get('/person', (request, response) => {
     pool.query('SELECT * FROM person', (error, result) => {
         if (error) throw error;
         response.send(result);
@@ -13,7 +12,7 @@ app.get('/person', (request, response) => {
 });
 
 // Display a single person by ID
-app.get('/person/:id', (request, response) => {
+router.get('/person/:id', (request, response) => {
     const id = request.params.id;
 
     pool.query('SELECT * FROM persons WHERE id = ?', id, (error, result) => {
@@ -24,7 +23,7 @@ app.get('/person/:id', (request, response) => {
 });
 
 // Add a new person
-app.post('/person', (request, response) => {
+router.post('/person', (request, response) => {
     pool.query('INSERT INTO person SET ?', request.body, (error, result) => {
         if (error) throw error;
 
@@ -33,7 +32,7 @@ app.post('/person', (request, response) => {
 });
 
 // Update an existing person
-app.put('/person/:id', (request, response) => {
+router.put('/person/:id', (request, response) => {
     const id = request.params.id;
 
     pool.query('UPDATE person SET ? WHERE id = ?', [request.body, id], (error, result) => {
@@ -44,7 +43,7 @@ app.put('/person/:id', (request, response) => {
 });
 
 // Delete a person
-app.delete('/person/:id', (request, response) => {
+router.delete('/person/:id', (request, response) => {
     const id = request.params.id;
 
     pool.query('DELETE FROM person WHERE id = ?', id, (error, result) => {
@@ -54,6 +53,4 @@ app.delete('/person/:id', (request, response) => {
     });
 });
 
-app.listen(3000, () => {
-    console.log("El servidor está inicializado en el puerto 3000");
-});
+module.exports = router;
