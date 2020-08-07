@@ -1,5 +1,6 @@
 const {Router} = require('express');
 const router = Router();
+
 // Load the MySQL pool connection
 const pool = require('../data/config.js');
 
